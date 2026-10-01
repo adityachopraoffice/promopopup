@@ -31,7 +31,7 @@ export default function Index() {
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <h1>PromoPopup App</h1>
       <p>To install this app, enter your store domain below:</p>
-      <Form method="post">
+      <Form method="post" action="/?index">
         <input 
           type="text" 
           name="shop" 
