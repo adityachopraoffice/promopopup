@@ -12,17 +12,7 @@ export const loader = async ({ request }) => {
   return null;
 };
 
-export const action = async ({ request }) => {
-  const body = await request.formData();
-  const shop = String(body.get("shop") || "");
-  
-  if (!shop) {
-    return Response.json({ error: "Shop is required" }, { status: 400 });
-  }
 
-  // Simply redirect to the app route, which triggers authenticate.admin and starts OAuth!
-  throw redirect(`/app?shop=${shop}`);
-};
 
 export default function Index() {
   return (
@@ -119,7 +109,7 @@ export default function Index() {
           </p>
         </div>
 
-        <Form method="post" action="/?index">
+        <Form method="post" action="/auth/login">
           <div style={{ marginBottom: '24px' }}>
             <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: '#cbd5e1' }}>
               Store Domain
