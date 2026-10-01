@@ -1,13 +1,13 @@
 name = "promopopup"
-client_id = "your_api_key"
-application_url = "your_vercel_url"
+client_id = "f25a308c93487fa414a0010181d3718a"
+application_url = "https://promopopup.vercel.app"
 embedded = true
 
 [access_scopes]
 scopes = "read_products"
 
 [auth]
-redirect_urls = ["your_vercel_url/auth/callback"]
+redirect_urls = ["https://promopopup.vercel.app/auth/callback", "https://promopopup.vercel.app/auth/shopify/callback", "https://promopopup.vercel.app/api/auth/callback"]
 
 [webhooks]
 api_version = "2024-01"

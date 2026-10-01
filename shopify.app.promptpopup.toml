@@ -2,15 +2,15 @@
 
 name = "promptpopup"
 client_id = "f25a308c93487fa414a0010181d3718a"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://promopopup.vercel.app"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "read_products"
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [ "https://promopopup.vercel.app/auth/callback", "https://promopopup.vercel.app/auth/shopify/callback", "https://promopopup.vercel.app/api/auth/callback" ]
 
 [webhooks]
 api_version = "2026-10"
@@ -22,7 +22,7 @@ handle = "promopopup-extension"
 automatically_update_urls_on_dev = true
 
 [app_proxy]
-url = "https://shopify.dev/apps/default-app-home"
+url = "https://promopopup.vercel.app"
 subpath = "promopopup"
 prefix = "apps"
 
