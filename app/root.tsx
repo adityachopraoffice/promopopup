@@ -6,6 +6,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+export const links = () => [
+  { rel: "icon", type: "image/png", href: "/favicon.png" }
+];
+
 export default function App() {
   return (
     <html>
