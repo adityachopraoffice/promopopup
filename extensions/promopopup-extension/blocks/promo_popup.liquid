@@ -1,0 +1,10 @@
+<div id="promopopup-wrapper" data-shop="{{ shop.permanent_domain }}"></div>
+{{ 'promo-popup.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Promo Popup",
+  "target": "body",
+  "settings": []
+}
+{% endschema %}

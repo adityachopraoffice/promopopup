@@ -1,0 +1,8 @@
+type = "web"
+name = "remix"
+roles = ["frontend", "backend"]
+webhooks_path = "/webhooks"
+
+[commands]
+predev = "npx prisma generate"
+dev = "npm run vite"
