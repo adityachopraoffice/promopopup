@@ -21,9 +21,8 @@ export const action = async ({ request }) => {
     return Response.json({ error: "Shop is required" }, { status: 400 });
   }
 
-  throw await login(shop, {
-    url: request.url,
-  });
+  // Simply redirect to the app route, which triggers authenticate.admin and starts OAuth!
+  throw redirect(`/app?shop=${shop}`);
 };
 
 export default function Index() {
