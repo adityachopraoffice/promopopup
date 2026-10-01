@@ -1,5 +1,6 @@
 import { redirect } from "@remix-run/node";
 import { login } from "../shopify.server";
+import { Form } from "@remix-run/react";
 
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
@@ -30,7 +31,7 @@ export default function Index() {
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <h1>PromoPopup App</h1>
       <p>To install this app, enter your store domain below:</p>
-      <form method="post">
+      <Form method="post">
         <input 
           type="text" 
           name="shop" 
@@ -40,7 +41,7 @@ export default function Index() {
         <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}>
           Install
         </button>
-      </form>
+      </Form>
     </div>
   );
 }
