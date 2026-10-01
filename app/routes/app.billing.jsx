@@ -47,7 +47,7 @@ export const loader = async ({ request }) => {
     return json({ currentPlan: settings.currentPlan });
   } catch (error) {
     console.error("LOADER CRASH:", error);
-    throw new Response(error.message + "\n" + error.stack, { status: 500, statusText: "Loader Error" });
+    return json({ currentPlan: "error", error: error.message + " | " + error.stack });
   }
 };
 
@@ -65,6 +65,7 @@ export const action = async ({ request }) => {
   try {
     await billing.require({
       plans: [planName],
+      isTest: true,
       onFailure: async () => billing.request({
         plan: planName,
         isTest: true,
@@ -85,9 +86,19 @@ export const action = async ({ request }) => {
 import { useEffect } from "react";
 
 export default function Billing() {
-  const { currentPlan } = useLoaderData();
+  const { currentPlan, error } = useLoaderData();
   const submit = useSubmit();
   const actionData = useActionData();
+
+  if (error) {
+    return (
+      <Page title="Billing Error">
+        <Banner title="Server Error" status="critical">
+          <p>{error}</p>
+        </Banner>
+      </Page>
+    );
+  }
 
   useEffect(() => {
     if (actionData?.redirectUrl) {
