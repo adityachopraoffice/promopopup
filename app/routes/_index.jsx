@@ -26,20 +26,118 @@ export const action = async ({ request }) => {
 
 export default function Index() {
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>PromoPopup App</h1>
-      <p>To install this app, enter your store domain below:</p>
-      <Form method="post" action="/?index">
-        <input 
-          type="text" 
-          name="shop" 
-          placeholder="your-store.myshopify.com" 
-          style={{ padding: '0.5rem', width: '300px' }} 
-        />
-        <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}>
-          Install
-        </button>
-      </Form>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
+      fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      color: '#ffffff',
+      margin: 0,
+      padding: '20px'
+    }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        body { margin: 0; background: #0f172a; }
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+          70% { box-shadow: 0 0 0 15px rgba(99, 102, 241, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        .glass-card {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
+          padding: 48px;
+          max-width: 420px;
+          width: 100%;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          animation: float 6s ease-in-out infinite;
+        }
+        .input-field {
+          width: 100%;
+          padding: 16px;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          color: white;
+          font-size: 16px;
+          transition: all 0.3s ease;
+          box-sizing: border-box;
+          margin-bottom: 8px;
+        }
+        .input-field:focus {
+          outline: none;
+          border-color: #6366f1;
+          background: rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        .submit-btn {
+          width: 100%;
+          padding: 16px;
+          background: linear-gradient(to right, #6366f1, #a855f7);
+          border: none;
+          border-radius: 12px;
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-top: 24px;
+        }
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+          animation: pulse 2s infinite;
+        }
+      `}} />
+
+      <div className="glass-card">
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{ 
+            width: '64px', height: '64px', borderRadius: '16px', 
+            background: 'linear-gradient(135deg, #38bdf8, #818cf8)', 
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '20px', boxShadow: '0 10px 25px -5px rgba(56, 189, 248, 0.5)'
+          }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h1 style={{ margin: '0 0 8px 0', fontSize: '28px', fontWeight: '700', background: 'linear-gradient(to right, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            Install PromoPopup
+          </h1>
+          <p style={{ margin: 0, color: '#94a3b8', fontSize: '15px' }}>
+            Enter your Shopify store domain to install the app.
+          </p>
+        </div>
+
+        <Form method="post" action="/?index">
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: '#cbd5e1' }}>
+              Store Domain
+            </label>
+            <input
+              type="text"
+              name="shop"
+              className="input-field"
+              placeholder="e.g. your-store.myshopify.com"
+              autoComplete="on"
+            />
+          </div>
+
+          <button type="submit" className="submit-btn">
+            Install App
+          </button>
+        </Form>
+      </div>
     </div>
   );
 }
