@@ -5,45 +5,50 @@ import prisma from "../db.server";
 import { json } from "@remix-run/node";
 
 export const loader = async ({ request }) => {
-  const { session, billing } = await authenticate.admin(request);
-  const shop = session.shop;
-
-  let billingCheck;
   try {
-    billingCheck = await billing.check({
-      plans: ['basic', 'pro'],
-      isTest: true,
-    });
-  } catch (error) {
-    console.error("Billing Check 403 Error:", error.message);
-    billingCheck = { hasActivePayment: false, appSubscriptions: [] };
-  }
+    const { session, billing } = await authenticate.admin(request);
+    const shop = session.shop;
 
-  let activePlan = "free";
-  if (billingCheck.hasActivePayment) {
-    if (billingCheck.appSubscriptions.some(sub => sub.name === 'pro')) {
-      activePlan = "pro";
-    } else if (billingCheck.appSubscriptions.some(sub => sub.name === 'basic')) {
-      activePlan = "basic";
+    let billingCheck;
+    try {
+      billingCheck = await billing.check({
+        plans: ['basic', 'pro'],
+        isTest: true,
+      });
+    } catch (error) {
+      console.error("Billing Check 403 Error:", error.message);
+      billingCheck = { hasActivePayment: false, appSubscriptions: [] };
     }
-  }
 
-  let settings = await prisma.shopSettings.findUnique({
-    where: { shop },
-  });
+    let activePlan = "free";
+    if (billingCheck.hasActivePayment) {
+      if (billingCheck.appSubscriptions.some(sub => sub.name === 'pro')) {
+        activePlan = "pro";
+      } else if (billingCheck.appSubscriptions.some(sub => sub.name === 'basic')) {
+        activePlan = "basic";
+      }
+    }
 
-  if (!settings) {
-    settings = await prisma.shopSettings.create({
-      data: { shop, currentPlan: activePlan },
-    });
-  } else if (settings.currentPlan !== activePlan) {
-    settings = await prisma.shopSettings.update({
+    let settings = await prisma.shopSettings.findUnique({
       where: { shop },
-      data: { currentPlan: activePlan },
     });
-  }
 
-  return json({ currentPlan: settings.currentPlan });
+    if (!settings) {
+      settings = await prisma.shopSettings.create({
+        data: { shop, currentPlan: activePlan },
+      });
+    } else if (settings.currentPlan !== activePlan) {
+      settings = await prisma.shopSettings.update({
+        where: { shop },
+        data: { currentPlan: activePlan },
+      });
+    }
+
+    return json({ currentPlan: settings.currentPlan });
+  } catch (error) {
+    console.error("LOADER CRASH:", error);
+    throw new Response(error.message + "\n" + error.stack, { status: 500, statusText: "Loader Error" });
+  }
 };
 
 export const action = async ({ request }) => {
