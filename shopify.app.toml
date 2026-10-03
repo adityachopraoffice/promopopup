@@ -14,3 +14,8 @@ api_version = "2024-01"
 
 [extensions.theme]
 handle = "promopopup-extension"
+
+[webhooks.privacy_compliance]
+customer_deletion_url = "https://promopopup.vercel.app/webhooks"
+customer_data_request_url = "https://promopopup.vercel.app/webhooks"
+shop_deletion_url = "https://promopopup.vercel.app/webhooks"

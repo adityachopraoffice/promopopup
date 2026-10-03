@@ -26,3 +26,7 @@ url = "https://promopopup.vercel.app"
 subpath = "promopopup"
 prefix = "apps"
 
+[webhooks.privacy_compliance]
+customer_deletion_url = "https://promopopup.vercel.app/webhooks"
+customer_data_request_url = "https://promopopup.vercel.app/webhooks"
+shop_deletion_url = "https://promopopup.vercel.app/webhooks"
