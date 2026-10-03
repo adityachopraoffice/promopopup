@@ -1,6 +1,5 @@
 <div id="promopopup-wrapper" data-shop="{{ shop.permanent_domain }}"></div>
-{{ 'promo-popup.js' | asset_url | script_tag }}
-
+<script src="{{ 'promo-popup.js' | asset_url }}" defer="defer"></script>
 {% schema %}
 {
   "name": "Promo Popup",
