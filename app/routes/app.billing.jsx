@@ -56,6 +56,30 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const plan = formData.get("plan");
 
+  if (plan === "free") {
+    const billingCheck = await billing.check({
+      plans: ['basic', 'pro'],
+      isTest: true,
+    });
+    
+    if (billingCheck.hasActivePayment) {
+      for (const sub of billingCheck.appSubscriptions) {
+        await billing.cancel({
+          subscriptionId: sub.id,
+          isTest: true,
+          prune: true,
+        });
+      }
+    }
+    
+    await prisma.shopSettings.update({
+      where: { shop: session.shop },
+      data: { currentPlan: "free" },
+    });
+    
+    return json({ success: true });
+  }
+
   const planName = plan === "basic" ? "basic" : "pro";
   
   // Construct the absolute Shopify Admin embedded URL!
@@ -133,8 +157,11 @@ export default function Billing() {
                       <List.Item>No image</List.Item>
                       <List.Item>No custom colors</List.Item>
                     </List>
-                    <Button disabled={currentPlan === 'free'}>
-                      {currentPlan === 'free' ? 'Current Plan' : 'Free Plan'}
+                    <Button 
+                      disabled={currentPlan === 'free'}
+                      onClick={() => handleUpgrade('free')}
+                    >
+                      {currentPlan === 'free' ? 'Current Plan' : 'Downgrade to Free'}
                     </Button>
                   </BlockStack>
                 </Card>
