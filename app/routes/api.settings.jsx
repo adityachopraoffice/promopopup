@@ -33,6 +33,27 @@ export const loader = async ({ request }) => {
     };
   }
 
+  // Enforce plan limits dynamically so users don't keep premium features after downgrading
+  if (settings.currentPlan === "free") {
+    settings.selectedTemplate = "minimal";
+    settings.delaySeconds = 5;
+    settings.imageUrl = "";
+    settings.bgColor = "#FFFFFF";
+    settings.textColor = "#000000";
+    settings.buttonColor = "#000000";
+    settings.buttonTextColor = "#FFFFFF";
+    settings.overlayColor = "rgba(0,0,0,0.5)";
+    settings.headline = "🎉 Special Offer Just For You!";
+    settings.message = "Shop now and enjoy our latest deals!";
+  } else if (settings.currentPlan === "basic") {
+    settings.imageUrl = "";
+    settings.bgColor = "#FFFFFF";
+    settings.textColor = "#000000";
+    settings.buttonColor = "#000000";
+    settings.buttonTextColor = "#FFFFFF";
+    settings.overlayColor = "rgba(0,0,0,0.5)";
+  }
+
   return json(settings, {
     headers: {
       "Access-Control-Allow-Origin": "*",
