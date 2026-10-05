@@ -41,7 +41,7 @@ export const loader = async ({ request }) => {
     settings.buttonColor = "#000000";
     settings.buttonTextColor = "#FFFFFF";
     settings.overlayColor = "rgba(0,0,0,0.5)";
-    settings.headline = "🎉 Special Offer Just For You!";
+    settings.headline = "Special Offer Just For You!";
     settings.message = "Shop now and enjoy our latest deals!";
   } else if (settings.currentPlan === "basic") {
     settings.imageUrl = "";
@@ -65,7 +65,7 @@ export const action = async ({ request }) => {
   const isPro = currentPlan === "pro";
 
   const dataToUpdate = {
-    headline: isFree ? "🎉 Special Offer Just For You!" : (formData.get("headline") || ""),
+    headline: isFree ? "Special Offer Just For You!" : (formData.get("headline") || ""),
     message: isFree ? "Shop now and enjoy our latest deals!" : (formData.get("message") || ""),
     imageUrl: isPro ? (formData.get("imageUrl") || "") : "",
     delaySeconds: isFree ? 5 : parseInt(formData.get("delaySeconds") || "5", 10),

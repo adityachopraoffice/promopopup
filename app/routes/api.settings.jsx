@@ -19,7 +19,7 @@ export const loader = async ({ request }) => {
   if (!settings) {
     settings = {
       shop,
-      headline: "🎉 Special Offer Just For You!",
+      headline: "Special Offer Just For You!",
       message: "Shop now and enjoy our latest deals!",
       imageUrl: "",
       delaySeconds: 5,
@@ -43,7 +43,7 @@ export const loader = async ({ request }) => {
     settings.buttonColor = "#000000";
     settings.buttonTextColor = "#FFFFFF";
     settings.overlayColor = "rgba(0,0,0,0.5)";
-    settings.headline = "🎉 Special Offer Just For You!";
+    settings.headline = "Special Offer Just For You!";
     settings.message = "Shop now and enjoy our latest deals!";
   } else if (settings.currentPlan === "basic") {
     settings.imageUrl = "";
