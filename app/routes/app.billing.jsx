@@ -8,12 +8,13 @@ export const loader = async ({ request }) => {
   try {
     const { session, billing } = await authenticate.admin(request);
     const shop = session.shop;
+    const isTest = process.env.SHOPIFY_BILLING_TEST === "true";
 
     let billingCheck;
     try {
       billingCheck = await billing.check({
         plans: ['basic', 'pro'],
-        isTest: true,
+        isTest,
       });
     } catch (error) {
       console.error("Billing Check 403 Error:", error.message);
@@ -55,18 +56,19 @@ export const action = async ({ request }) => {
   const { billing, session } = await authenticate.admin(request);
   const formData = await request.formData();
   const plan = formData.get("plan");
+  const isTest = process.env.SHOPIFY_BILLING_TEST === "true";
 
   if (plan === "free") {
     const billingCheck = await billing.check({
       plans: ['basic', 'pro'],
-      isTest: true,
+      isTest,
     });
     
     if (billingCheck.hasActivePayment) {
       for (const sub of billingCheck.appSubscriptions) {
         await billing.cancel({
           subscriptionId: sub.id,
-          isTest: true,
+          isTest,
           prune: true,
         });
       }
@@ -89,10 +91,10 @@ export const action = async ({ request }) => {
   try {
     await billing.require({
       plans: [planName],
-      isTest: true,
+      isTest,
       onFailure: async () => billing.request({
         plan: planName,
-        isTest: true,
+        isTest,
         returnUrl: returnUrl,
       }),
     });
@@ -172,7 +174,7 @@ export default function Billing() {
                 <Card>
                   <BlockStack gap="400">
                     <Text as="h2" variant="headingLg">Basic</Text>
-                    <Text as="h3" variant="headingMd">$4.99/mo</Text>
+                    <Text as="h3" variant="headingMd">$49/mo</Text>
                     <List>
                       <List.Item>All 4 templates</List.Item>
                       <List.Item>Custom headline and message</List.Item>
@@ -196,7 +198,7 @@ export default function Billing() {
                 <Card>
                   <BlockStack gap="400">
                     <Text as="h2" variant="headingLg">Pro</Text>
-                    <Text as="h3" variant="headingMd">$9.99/mo</Text>
+                    <Text as="h3" variant="headingMd">$99/mo</Text>
                     <List>
                       <List.Item>All 4 templates</List.Item>
                       <List.Item>Custom headline and message</List.Item>

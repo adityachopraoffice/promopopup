@@ -6,12 +6,13 @@ import { json } from "@remix-run/node";
 export const loader = async ({ request }) => {
   const { session, billing } = await authenticate.admin(request);
   const shop = session.shop;
+  const isTest = process.env.SHOPIFY_BILLING_TEST === "true";
 
   let billingCheck;
   try {
     billingCheck = await billing.check({
       plans: ['basic', 'pro'],
-      isTest: true,
+      isTest,
     });
   } catch (error) {
     billingCheck = { hasActivePayment: false, appSubscriptions: [] };

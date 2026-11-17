@@ -304,7 +304,7 @@ function PreviewPopup({ settings, isPro }) {
     }}>
       <div style={{ position: 'absolute', top: '10px', right: '10px', cursor: 'pointer' }}>X</div>
       {isPro && settings.imageUrl && (
-        <img src={settings.imageUrl} alt="" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderTopLeftRadius: tStyles.radius, borderTopRightRadius: tStyles.radius, marginTop: '-32px', marginLeft: '-32px', marginRight: '-32px', width: 'calc(100% + 64px)', marginBottom: '16px' }} />
+        <img src={settings.imageUrl} alt="" style={{ width: 'calc(100% + 64px)', maxHeight: '200px', objectFit: 'cover', borderTopLeftRadius: tStyles.radius, borderTopRightRadius: tStyles.radius, marginTop: '-32px', marginLeft: '-32px', marginRight: '-32px', marginBottom: '16px' }} />
       )}
       <div style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '12px' }}>{settings.headline}</div>
       <div style={{ fontSize: '15px', marginBottom: '20px' }}>{settings.message}</div>
